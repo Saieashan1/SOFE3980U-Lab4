@@ -79,4 +79,73 @@ public class Binary
 		return result;
 		
 	}
+
+/**
+ * OR for two binary numbers.
+ *
+ * @param num1 First binary value
+ * @param num2 Second binary value
+ * @return Result is returned (OR) 
+ */
+public static Binary or(Binary num1, Binary num2) {
+    int maxLength = Math.max(num1.number.length(), num2.number.length());
+    StringBuilder result = new StringBuilder();
+
+    String num1length = String.format("%" + maxLength + "s", num1.number).replace(' ', '0');
+   
+	String num2length = String.format("%" + maxLength + "s", num2.number).replace(' ', '0');
+
+    for (int i = 0; i < maxLength; i++) {
+        result.append((num1length.charAt(i) == '1' || num2length.charAt(i) == '1') ? '1' : '0');
+    }
+
+    return new Binary(result.toString());
+}
+
+/**
+ * AND for the two binary numbers.
+ * @param num1 First binary number
+ * @param num2 Second binary number
+ * @return Result is returned (AND) 
+ */
+public static Binary and(Binary num1, Binary num2) {
+int maxLength = Math.max(num1.number.length(), num2.number.length());
+    StringBuilder result = new StringBuilder();
+    String num1length = String.format("%" + maxLength + "s", num1.number).replace(' ', '0');
+    String num2length = String.format("%" + maxLength + "s", num2.number).replace(' ', '0');
+
+    for (int i = 0; i < maxLength; i++) {
+        result.append((num1length.charAt(i) == '1' && num2length.charAt(i) == '1') ? '1' : '0');
+    }
+
+    return new Binary(result.toString());
+}
+
+
+
+/**
+ * Multiply the two binary numbers.
+ * @param num1 First binary numberr
+ * @param num2 Second binary number 
+ * @return Result is returned (MULTIPLICATION) 
+ */
+public static Binary multiply(Binary num1, Binary num2) {
+    Binary result = new Binary("0");
+
+    for (int i = num2.number.length() - 1; i >= 0; i--) {
+        int digit = num2.number.charAt(i) - '0';
+
+        Binary partialProduct = (digit == 0) ? new Binary("0") : new Binary(num1.number);
+
+        for (int j = 0; j < num2.number.length() - 1 - i; j++) {
+            partialProduct.number += "0";
+        }
+
+        result = add(result, partialProduct);
+    }
+
+    return result;
+}
+
+
 }	
